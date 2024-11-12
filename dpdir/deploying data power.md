@@ -27,23 +27,8 @@ Next, start the DataPower container, connecting it to the same network:
 
 DATAPOWER_ACCEPT_LICENSE environment variable or --accept-license flag not set. Set them and restart DataPower.
 
-```
-docker run -d --name datapower \
-   --network chickenpizza \
-   -p 9090:9090 \  # WebGUI port
-   -p 5554:5554 \  # REST management interface
-   -e DATAPOWER_ACCEPT_LICENSE=true \ # Agree to the license
-   -e DATAPOWER_INTERACTIVE=true\ Allow Cli interactive
-   icr.io/cpopen/datapower/datapower-limited:10.6.1.0
-```
-
-```
-docker run -it --name name \
-    -e DATAPOWER_ACCEPT_LICENSE="true" \
-    -e DATAPOWER_INTERACTIVE="true" \
-    -p 9090:9090 \
-    tag
-```
+mkdir -p ./your_working_directory/{config,local,certs}
+mkdir -p ./your_working_directory/{config,local,certs}
 
 Run commands must not include comments
 ```
@@ -74,6 +59,8 @@ docker container start c095c9996480
 ```
 docker exec -it datapower2 bash
 docker exec -it datapower2 drouter
+docker exec -it datapower drouter
+docker start -i datapower
 
 ```
 ```
@@ -84,14 +71,33 @@ docker run -d --name datapower -e DATAPOWER_ACCEPT_LICENSE="true" -p 5550:5550 -
 ```
 ```
 docker container stop datapower && docker container remove datapower && docker run -d --name datapower -e DATAPOWER_ACCEPT_LICENSE="true" -p 5550:5550 -p 9090:9090 icr.io/cpopen/datapower/datapower-limited:10.6.1.0
+docker container stop datapower && docker container remove datapower && docker run -it --name datapower -e DATAPOWER_ACCEPT_LICENSE="true" -p 5550:5550 -p 9090:9090 icr.io/cpopen/datapower/datapower-limited:10.6.1.0
+
+```
+```
+docker run -it --name datapower \
+-v $(pwd)/config:/opt/ibm/datapower/drouter/config \
+-v $(pwd)/local:/opt/ibm/datapower/drouter/local \
+-v $(pwd)/certs:/opt/ibm/datapower/root/secure/usrcerts \
+-e DATAPOWER_ACCEPT_LICENSE="true" \
+-e DATAPOWER_INTERACTIVE="true" \
+-p 9090:9090 \
+icr.io/cpopen/datapower/datapower-limited:10.6.1.0
 ```
 Default username and password is admin by the way.
-```
-# configure terminal
-# web-mgmt
-# admin-state "enabled"
-# exit
 
+```
+configure terminal
+web-mgmt
+admin-state "enabled"
+exit
+write mem
+
+```
+Ctrl + P + Q
+```
+docker attach <container_name_or_id>
+docker attach datapower
 ```
 # Step 3: Configure DataPower to Route Requests to Your Application
 - Access the DataPower Web GUI:
