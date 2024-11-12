@@ -28,7 +28,7 @@ Next, start the DataPower container, connecting it to the same network:
 DATAPOWER_ACCEPT_LICENSE environment variable or --accept-license flag not set. Set them and restart DataPower.
 
 mkdir -p ./your_working_directory/{config,local,certs}
-mkdir -p ./your_working_directory/{config,local,certs}
+mkdir -p ./dpdir/{config,local,certs}
 
 Run commands must not include comments
 ```
