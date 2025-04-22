@@ -23,6 +23,3 @@
 - Secondly , I'm , by all means , a control freak . A very powerful control freak , but you will never hear about me anywhere .
 - Thirdly , I'm very sentimental about any help / tribute I received . That means I will allow certain numbers of things happen under my nose , as long as I benefit from it.
 - Last, finally . please do not upset me . I will not be able to control myself doing terrible things in for the sake of a deal I can't save ( looking at you , shizuka / peach ).
-
-
-sudo vmhgfs-fuse .host:/ /mnt/hgfs/ -o allow_other -o uid=1000
